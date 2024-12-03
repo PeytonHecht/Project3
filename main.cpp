@@ -1,3 +1,10 @@
+/*
+ Developers:
+ Peyton Hecht
+ Revanth Yalamanch
+*/
+
+
 #include <iostream>
 #include <vector>
 #include <fstream>
@@ -59,14 +66,13 @@ vector<Flight> readFlightData(const string& filename) {
     vector<Flight> flights;  // vector to store the flight data
     ifstream file(filename);  // open the file
 
-    if (!file.is_open()) {  // check if the file is opened successfully
+    if (!file.is_open()) {  // check if the file is opened
         cerr << "Failed to open file: " << filename << endl;
         return flights;  // return an empty vector if file cannot be opened
     }
 
     string line;
     if (!getline(file, line)) {  // read the header line
-        cerr << "Failed to read header line from the file." << endl;
         return flights;  // return an empty vector if header cannot be read
     }
 
@@ -77,10 +83,10 @@ vector<Flight> readFlightData(const string& filename) {
 
     vector<string> headers = parseCSVLine(line, comma);  // parse the header line into columns
 
-    cout << "Headers:" << endl;
-    for (size_t i = 0; i < headers.size(); ++i) {  // output the headers for debugging
-        cout << i << ": '" << headers[i] << "'" << endl;
-    }
+//    cout << "Headers:" << endl;
+//    for (size_t i = 0; i < headers.size(); ++i) {  // output the headers
+//        cout << i << ": '" << headers[i] << "'" << endl;
+//    }
 
     int carrier_idx = -1, airport_name_idx = -1, arr_delay_idx = -1;
     // find the indices of the required columns based on header names
@@ -93,7 +99,7 @@ vector<Flight> readFlightData(const string& filename) {
         else if (header_lower == "arr_delay") arr_delay_idx = i;
     }
 
-    cout << "carrier_idx: " << carrier_idx << ", airport_name_idx: " << airport_name_idx << ", arr_delay_idx: " << arr_delay_idx << endl;
+//    cout << "carrier_idx: " << carrier_idx << ", airport_name_idx: " << airport_name_idx << ", arr_delay_idx: " << arr_delay_idx << endl;
 
     // if any required column is missing, return an empty vector
     if (carrier_idx == -1 || airport_name_idx == -1 || arr_delay_idx == -1) {
@@ -182,7 +188,7 @@ vector<Flight> getAverageCase(const vector<Flight>& flights) {
 }
 
 int main() {
-    string filename = "Airline_Delay_Cause.csv";  // input CSV file name
+    string filename = "C:/Users/peyto/Airline_Delay_Cause.csv";  // input CSV file name
     vector<Flight> flights = readFlightData(filename);  // read flight data from the file
 
     if (flights.empty()) {  // if no data is read, terminate
@@ -209,13 +215,12 @@ int main() {
     }
 
     int filterChoice = 0;
-    cout << "Do you want to sort delays specific to:\n";
+    cout << "Do you want to sort delays based on:\n";
     cout << "1. An airline carrier\n";
     cout << "2. An airport (city name)\n";
-    cout << "Enter your choice (1 or 2): ";
+    cout << "Enter a number (1 or 2): ";
     cin >> filterChoice;  // user input for filter choice
 
-    // Validate filter choice input
     while (filterChoice != 1 && filterChoice != 2) {
         cout << "Invalid choice. Please enter 1 or 2: ";
         cin >> filterChoice;
@@ -251,7 +256,7 @@ int main() {
         cin.ignore();
         getline(cin, airportName);  // allow input with spaces
 
-        // Convert the airport name to lowercase for case-insensitive comparison
+        // Convert airport name to lowercase
         string airportNameLower = airportName;
         transform(airportNameLower.begin(), airportNameLower.end(), airportNameLower.begin(), ::tolower);
 
@@ -341,3 +346,12 @@ int main() {
 
     return 0;
 }
+
+// Reference
+
+/*
+*   Title: Flight Delay Data for U.S. Airports by Carrier August 2013 - August 2023
+*    Author: Sri Harsha Eedala
+*    Date: 2023
+*    Availability: https://www.kaggle.com/datasets/sriharshaeedala/airline-delay/data
+ */
