@@ -157,9 +157,66 @@ void quickSort(vector<Flight>& flights, int low, int high) {
 
 // Placeholder for merge sort implementation
 void mergeSort(vector<Flight>& flights, int left, int right) {
-    // FIXME: implement merge sort here
-    // function should sort the flights vector between indices left and right
-    // based on arr_delay using the merge sort algorithm. make sure to check out comments in int main as well
+    void merge(vector<Flight>& flights, int left, int mid, int right) {
+    int n1 = mid - left + 1;
+    int n2 = right - mid;
+
+    // Temporary arrays
+    vector<Flight> leftArray(n1);
+    vector<Flight> rightArray(n2);
+
+    // Copy data to temp arrays
+    for (int i = 0; i < n1; i++) {
+        leftArray[i] = flights[left + i];
+    }
+    for (int i = 0; i < n2; i++) {
+        rightArray[i] = flights[mid + 1 + i];
+    }
+
+    int i = 0; // Initial index of left array
+    int j = 0; // Initial index of right array
+    int k = left; // Initial index of merged array
+
+    // Merge the temp arrays back into flights
+    while (i < n1 && j < n2) {
+        if (leftArray[i].arr_delay <= rightArray[j].arr_delay) {
+            flights[k] = leftArray[i];
+            i++;
+        } else {
+            flights[k] = rightArray[j];
+            j++;
+        }
+        k++;
+    }
+
+    // Copy the remaining elements of leftArray
+    while (i < n1) {
+        flights[k] = leftArray[i];
+        i++;
+        k++;
+    }
+
+    // Copy the remaining elements of rightArray
+    while (j < n2) {
+        flights[k] = rightArray[j];
+        j++;
+        k++;
+    }
+}
+
+// Merge sort function
+void mergeSort(vector<Flight>& flights, int left, int right) {
+    if (left < right) {
+        int mid = left + (right - left) / 2;
+
+        // Recursively sort first and second halves
+        mergeSort(flights, left, mid);
+        mergeSort(flights, mid + 1, right);
+
+        // Merge the sorted halves
+        merge(flights, left, mid, right);
+    }
+}
 }
 
 // Function to return the best case (already sorted data)
