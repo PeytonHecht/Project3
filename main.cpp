@@ -1,7 +1,7 @@
 /*
  Developers:
  Peyton Hecht
- Revanth Yalamanch
+ Revanth Yalamanchili
 */
 
 
@@ -156,10 +156,52 @@ void quickSort(vector<Flight>& flights, int low, int high) {
 }
 
 // Placeholder for merge sort implementation
+void merge(vector<Flight>& flights, int left, int mid, int right) {
+    int n1 = mid - left + 1;
+    int n2 = right - mid;
+    vector<Flight> leftArray(n1);
+    vector<Flight> rightArray(n2);
+
+    for (int i = 0; i < n1; i++) {
+        leftArray[i] = flights[left + i];
+    }
+    for (int i = 0; i < n2; i++) {
+        rightArray[i] = flights[mid + 1 + i];
+    }
+
+    int i = 0, j = 0, k = left;
+
+    while (i < n1 && j < n2) {
+        if (leftArray[i].arr_delay <= rightArray[j].arr_delay) {
+            flights[k] = leftArray[i];
+            i++;
+        } else {
+            flights[k] = rightArray[j];
+            j++;
+        }
+        k++;
+    }
+
+    while (i < n1) {
+        flights[k] = leftArray[i];
+        i++;
+        k++;
+    }
+
+    while (j < n2) {
+        flights[k] = rightArray[j];
+        j++;
+        k++;
+    }
+}
+
 void mergeSort(vector<Flight>& flights, int left, int right) {
-    // FIXME: implement merge sort here
-    // function should sort the flights vector between indices left and right
-    // based on arr_delay using the merge sort algorithm. make sure to check out comments in int main as well
+    if (left < right) {
+        int mid = left + (right - left) / 2;
+        mergeSort(flights, left, mid);
+        mergeSort(flights, mid + 1, right);
+        merge(flights, left, mid, right);
+    }
 }
 
 // Function to return the best case (already sorted data)
