@@ -2,7 +2,7 @@
 MergeSort vs Quicksort for airplane departures.
 
 This program compares the efficiency of QuickSort vs Merge Sort, while also 
-providing functionailuty regarding
+providing functionality regarding
 Airplane departures. Hypothetically, this could be used to sort real-time 
 data of airpline flight delays as they update on a public database. 
 For this project we used Flight Delay Data for U.S. Airports by 
