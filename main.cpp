@@ -275,6 +275,7 @@ int main() {
         string airlineName;
         cout << "Enter the airline carrier code (e.g., AA, DL, UA): ";
         cin >> airlineName;
+     
 
         // Validate airline carrier code input
         while (validCarriers.find(airlineName) == validCarriers.end()) {
